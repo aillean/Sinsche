@@ -2,19 +2,16 @@ package com.android.arvin.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 
-import com.android.arvin.DataText.ContentViewItemData;
-import com.android.arvin.DataText.SubItemTest;
+import com.android.arvin.data.ContentViewItemData;
 import com.android.arvin.R;
 import com.android.arvin.data.GObject;
 import com.android.arvin.util.GAdapter;
-import com.android.arvin.util.GAdapterUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

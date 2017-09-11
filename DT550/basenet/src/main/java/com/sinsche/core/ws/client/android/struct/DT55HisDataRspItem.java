@@ -2,13 +2,7 @@ package com.sinsche.core.ws.client.android.struct;
 
 public class DT55HisDataRspItem implements java.io.Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 4528577771450897538L;
-    /**
-     *
-     */
 
     private String strTestTime;// 测试时间
     private String strData;// 数据
