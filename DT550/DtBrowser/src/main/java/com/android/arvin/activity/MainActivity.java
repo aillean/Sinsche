@@ -9,33 +9,30 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import com.android.arvin.DataText.DeviceTest;
+import com.android.arvin.data.DeviceData;
 import com.android.arvin.R;
+import com.android.arvin.manager.DataReception;
 import com.android.arvin.data.GObject;
+import com.android.arvin.interfaces.UiDataCallback;
 import com.android.arvin.ui.ContentItemView;
 import com.android.arvin.ui.DeviceFooterLayout;
 import com.android.arvin.ui.DeviceLayout;
 import com.android.arvin.ui.Dialog.DeviceDialog;
 import com.android.arvin.ui.DtContentView;
 import com.android.arvin.util.DeviceConfig;
-import com.android.arvin.util.DtUtils;
-import com.qq408543103.basenet.AuthorClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainActivity extends DtAppCompatActivity {
+public class MainActivity extends DtAppCompatActivity implements UiDataCallback {
 
     final static String TAG = MainActivity.class.getSimpleName();
-    //private DeviceStorehouseLayout deviceStorehouseLayout;
     private Map<String, DeviceLayout> deviceMap = new HashMap<String, DeviceLayout>();
     private ScrollView device_scrollView;
     private LinearLayout deviceFatherFayout;
-
-
-
+    private DataReception dataReception;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,7 @@ public class MainActivity extends DtAppCompatActivity {
         initActionBar();
         initView();
 
-        authorClient.Start("192.168.3.105", 7010, "A14BEC3A-FC35F0AE-2302646A-6EB3723A","AndroidAPP", getCacheDir().getAbsolutePath());
+
     }
 
     private void initActionBar() {
@@ -74,12 +71,7 @@ public class MainActivity extends DtAppCompatActivity {
     private void initView() {
         device_scrollView = (ScrollView) findViewById(R.id.device_scrollView);
         deviceFatherFayout = (LinearLayout) findViewById(R.id.device_father_layout);
-
-
-        addDeviceView(DtUtils.getTestData(this, 1));
-        addDeviceView(DtUtils.getTestData(this, 2));
-        addDeviceView(DtUtils.getTestData(this, 3));
-        addDeviceView(DtUtils.getTestData(this, 4));
+        dataReception = new DataReception(this, this);
     }
 
     private void initSubView(DeviceLayout deviceLayout) {
@@ -94,16 +86,14 @@ public class MainActivity extends DtAppCompatActivity {
 
     public void showLoginDialog() {
         FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-
         DeviceDialog dialog = DeviceDialog.instance();
         dialog.show(ft, "");
     }
 
-
-    private void addDeviceView(final DeviceTest deviceTest) {
-        DeviceLayout deviceLayout = new DeviceLayout(this, deviceTest);
+    private void startAddDeviceView(final DeviceData deviceData) {
+        DeviceLayout deviceLayout = new DeviceLayout(this, deviceData);
         //key必需不一样, 需要设置端提供唯的标识,否则有可能发生碰撞, 进而更新错数据
-        deviceMap.put(deviceTest.getDeviceName(), deviceLayout);
+        deviceMap.put(deviceData.getStrSerial(), deviceLayout);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         deviceLayout.setLayoutParams(layoutParams);
@@ -144,7 +134,11 @@ public class MainActivity extends DtAppCompatActivity {
             @Override
             public void onItemClick(ContentItemView view) {
 
-                showLoginDialog();
+                ////
+                ////
+                ////请在这里,触发更新dialog数据的操作, 数据更新完成, 会启动dialog
+                ////数据暂时未填充.
+
             }
 
             @Override
@@ -154,6 +148,16 @@ public class MainActivity extends DtAppCompatActivity {
         });
 
         initSubView(deviceLayout);
-
     }
+
+    @Override
+    public void addDeviceView(DeviceData deviceData) {
+        startAddDeviceView(deviceData);
+    }
+
+    @Override
+    public void showDialog(DeviceData deviceData) {
+        showLoginDialog();
+    }
+
 }

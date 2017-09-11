@@ -1,6 +1,6 @@
 package com.android.arvin.util;
 
-import com.android.arvin.DataText.SubItemTest;
+import com.android.arvin.data.SubItemData;
 import com.android.arvin.data.GObject;
 
 /**
@@ -9,7 +9,7 @@ import com.android.arvin.data.GObject;
 
 public class GAdapterUtil {
 
-    public static GObject objectFromTestData(final SubItemTest data) {
+    public static GObject objectFromTestData(final SubItemData data) {
         GObject object = new GObject();
 
         if (!DtUtils.isNullOrEmpty(data.getMeasure_item_liquid_state_text())) {

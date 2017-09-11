@@ -1,16 +1,14 @@
 package com.android.arvin.ui;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.arvin.DataText.ContentViewItemData;
-import com.android.arvin.DataText.DeviceTest;
-import com.android.arvin.DataText.SubItemTest;
+import com.android.arvin.data.ContentViewItemData;
+import com.android.arvin.data.DeviceData;
+import com.android.arvin.data.SubItemData;
 import com.android.arvin.R;
 import com.android.arvin.util.GAdapter;
 import com.android.arvin.util.GAdapterUtil;
@@ -36,7 +34,7 @@ public class DeviceLayout extends RelativeLayout {
     private int contentViewItemInt = R.layout.content_view_item_layout;
 
     private ContentViewItemData itemData;
-    private DeviceTest deviceTest;
+    private DeviceData deviceTest;
 
     public ContentViewItemData getItemData() {
         return itemData;
@@ -46,10 +44,10 @@ public class DeviceLayout extends RelativeLayout {
         this.itemData = itemData;
     }
 
-    public DeviceTest getDeviceTest() {
+    public DeviceData getDeviceTest() {
         return deviceTest;
     }
-    public void setDeviceTest(DeviceTest deviceTest) {
+    public void setDeviceTest(DeviceData deviceTest) {
         this.deviceTest = deviceTest;
     }
 
@@ -68,7 +66,7 @@ public class DeviceLayout extends RelativeLayout {
         public void updateGridLayoutHight(int row);
     }
 
-    public DeviceLayout(Context context, DeviceTest device) {
+    public DeviceLayout(Context context, DeviceData device) {
         super(context);
         this.context = context;
         this.deviceTest = device;
@@ -81,7 +79,7 @@ public class DeviceLayout extends RelativeLayout {
         initView(context);
     }
 
-    private void initData(DeviceTest device){
+    private void initData(DeviceData device){
         itemData = new ContentViewItemData();
         itemData.setGridDefaultShowRowCount(context.getResources().getInteger(R.integer.gridLayout_default_show_row));
         itemData.setGridColumnCount(context.getResources().getInteger(R.integer.gridLayout_column));
@@ -150,13 +148,13 @@ public class DeviceLayout extends RelativeLayout {
     }*/
 
     public void setAdapter() {
-        List<SubItemTest> subItemTestList = deviceTest.getSubItemTestList();
+        List<SubItemData> subItemTestList = deviceTest.getSubItemTestList();
         if(subItemTestList == null || subItemTestList.size() == 0){
             return;
         }
 
         GAdapter gAdapter = new GAdapter();
-        for (SubItemTest subItemTest: subItemTestList) {
+        for (SubItemData subItemTest: subItemTestList) {
             gAdapter.addObject(GAdapterUtil.objectFromTestData(subItemTest));
         }
 

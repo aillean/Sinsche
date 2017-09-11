@@ -1,4 +1,4 @@
-package com.android.arvin.DataText;
+package com.android.arvin.data;
 
 /**
  * Created by tuoyi on 2017/9/10 0010.
